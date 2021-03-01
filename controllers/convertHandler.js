@@ -9,34 +9,59 @@
 function ConvertHandler() {
   
   this.getNum = function(input) {
+
     let num = input.replace(/[a-zA-Z]+/,"");
 
-    if(num.includes('/')){
-      var splitNum = num.split("");
-      // console.log(splitNum.filter(element => typeof(element) === 'number'))
-      if(splitNum.length > 3) return "invalid"
-      if(splitNum.includes('.')) return "invalid"
+    // if(num.includes('/') && num.includes('.')){
+    //   let split = num.split('/');
+
+    //   let result = split[0]/split[1];
+    //   return Number(result);
+    // }
+     if(num.includes('/') && num.includes('.')){
+      var splitNum = num.split('/'), split = num.split('');;
+
+      //More than one '/'
+      const miniArr = [];
+      split.filter(elem => {
+        if(elem === '/') miniArr.push(elem);
+      });
+      if(miniArr.length > 1) return "invalid number"
       else{
-        let result = splitNum[0]/splitNum[2];
-        return result;
+        let result = splitNum[0]/splitNum[1];
+        return Number(result);
       }
+     }else if(num.includes('/')){
+          var splitII = num.split('');
+
+          //More than one '/'
+          const miniArrII = [];
+          splitII.filter(elem => {
+            if(elem === '/') miniArrII.push(elem);
+          });
+          if(miniArrII.length > 1) return "invalid number"
+          else{
+            let result = splitII[0]/splitII[2];
+            return Number(result);
+          }
      }else if(num == '') {
        let result = num = 1;
-      return result ;
+      return Number(result);
      }
     else {
       let result = num;
-      return result;
+      return Number(result);
     }
   };
   
+
 
 
   this.getUnit = function(input) {
     let unit = input.replace(/[0-9]\.*\/*[0-9]*\.*\/*[0-9]*\.*/,"");
     let result;
     result = unit;
-     if(!result && result === "") return "invalid"
+     if(!result && result === "") return "invalid unit"
      if(result === 'l' || result === 'L') return result.toUpperCase();
       else{
         return result.toLowerCase();
@@ -67,12 +92,12 @@ function ConvertHandler() {
   
   this.convert = function(initNum, initUnit) {
     let result;
+    
     const galToL = 3.78541;
     const lbsToKg = 0.453592;
     const miToKm = 1.60934;
-
     let input = ['gal','L','mi','km','lbs','kg'];
-    // let expect = ['L','gal','km','mi','kg','lbs'];
+
 
     let expect = [
       {unit:'L', value: galToL},
@@ -92,8 +117,8 @@ function ConvertHandler() {
         }
        }
     })    
-    // if(typeof(result) === 'number') return result.toFixed(5);
-    return result;
+    if(typeof(result) === 'number') return Number(result.toFixed(5));
+
   };
   
   this.getString = function(initNum, initUnit, returnNum, returnUnit) {
