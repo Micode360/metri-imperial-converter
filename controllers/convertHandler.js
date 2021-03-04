@@ -11,11 +11,11 @@ function ConvertHandler() {
   this.getNum = function (input) {
 
     let num = input.replace(/[a-zA-Z]+/, "");
-
+    console.log(num, 'number')
 
     if (num.includes('/') && num.includes('.')) {
       var splitNum = num.split('/'), split = num.split('');;
-
+      
       //More than one '/'
       const miniArr = [];
       split.filter(elem => {
@@ -39,7 +39,7 @@ function ConvertHandler() {
         let result = splitII[0] / splitII[2];
         return Number(result);
       }
-    } else if (num == '') {
+    } else if (num === '') {
       let result = num = 1;
       return Number(result);
     }
@@ -58,7 +58,10 @@ function ConvertHandler() {
     let result;
     result = unit;
 
-    if (!unitAbrrevation.includes(unit)) return "invalid unit";
+    console.log(result, 'unit')
+    const unitProcessor = unitAbrrevation.filter(item => item === result).toString()
+
+    if (!unitProcessor) return "invalid unit";
     else if (result === 'l' || result === 'L') return result.toUpperCase();
     else {
       return result.toLowerCase();
@@ -129,6 +132,7 @@ function ConvertHandler() {
 }
 
 module.exports = ConvertHandler;
+
 
 
 
